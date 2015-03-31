@@ -3,21 +3,22 @@
  */
 'use strict';
 
-angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 'staples.Directives', 'fusion.Directives'])
+angular.module('fusionSeed.viewstullerProduct', ['ngRoute','solr.Directives', 'stuller.Directives', 'fusion.Directives'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.
-            when('/staples/p/:description?/:docId?', {
-                templateUrl: 'staples/view-product.html',
-                controller: 'ViewstaplesProductCtrl'
+            when('/stuller/p/:description?/:docId?', {
+                templateUrl: 'stuller/view-product.html',
+                controller: 'ViewstullerProductCtrl'
             });
     }])
 
-    /*.controller('ViewstaplesSearchCtrl', [function() {
+    /*.controller('ViewstullerSearchCtrl', [function() {
 
      }]);*/
 
-    .controller('ViewstaplesProductCtrl', function ($scope, $http, $routeParams, $location, $route, $sce, fusionHttp, staplesSettings) {
+    .controller('ViewstullerProductCtrl', function ($scope, $http, $routeParams, $location, $route, $sce, fusionHttp, stullerSettings) {
+
 
 
         $scope.q = $routeParams.q;
@@ -25,9 +26,9 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
         //queryPipeline(pipelineId,collectionId,reqHandlr,params)
         //product document
         fusionHttp.getQueryPipeline(
-           staplesSettings.fusionUrl,
-            'staples1-simple',
-            'staples1',
+           stullerSettings.fusionUrl,
+            'products1-simple',
+            'products1',
             'select',
                 {
                     q: 'id:'+$routeParams.docId,
@@ -41,7 +42,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
 
 
         //item counts
-        /*http://162.242.133.12:8983/solr/staples1_signals/select
+        /*http://162.242.133.12:8983/solr/stuller1_signals/select
         ?wt=json
         &rows=0
         &indent=true
@@ -52,7 +53,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
         &q=doc_id_s:f84781bf31cb43549abdac9e3125ecc8
         &stats.facet=type_s
          */
-        fusionHttp.getQueryPipeline(staplesSettings.fusionUrl,"staples1-simple","staples1_signals","select",
+        fusionHttp.getQueryPipeline(stullerSettings.fusionUrl,"products1-simple","products1_signals","select",
             {
                 q: "doc_id_s:"+$routeParams.docId,
                 'wt': 'json',
@@ -74,7 +75,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
         //recommendations
         //limit recommendations to the current store
         var fqs = [];
-        fusionHttp.getItemsForItemRecommendations(staplesSettings.fusionUrl,staplesSettings.collectionId,$routeParams.docId,fqs)
+        fusionHttp.getItemsForItemRecommendations(stullerSettings.fusionUrl,stullerSettings.collectionId,$routeParams.docId,fqs)
             .success(function(data, status, headers, config) {
                 //console.log(data);
                 //$scope.recommendations = data.items;
@@ -83,11 +84,11 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
                     var item = data.items[i];
                     q+= 'id:'+item.docId+'^'+item.weight + ' ';
                 }
-                fusionHttp.getQueryPipeline(staplesSettings.fusionUrl,"staples1-simple",staplesSettings.collectionId,"select",
+                fusionHttp.getQueryPipeline(stullerSettings.fusionUrl,"products1-simple",stullerSettings.collectionId,"select",
                     {
                         q: q,
                         wt: 'json',
-                        fl: 'id,PRODUCTNAME_t,attr_IMAGE_TYPE_URL_6_,attr_FILENAME_6_,score',
+                        fl: 'id,Name_t,attr_Image_,score',
                         rows: '5'
                     }).success(function(data) {
                        $scope.recommendations = data.response.docs;
@@ -102,7 +103,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
             return $sce.trustAsHtml(html_code);
         };
 
-        fusionHttp.getItemsForQueryRecommendations(staplesSettings.fusionUrl,staplesSettings.collectionId,$routeParams.q,fqs)
+        fusionHttp.getItemsForQueryRecommendations(stullerSettings.fusionUrl,stullerSettings.collectionId,$routeParams.q,fqs)
             .success(function(data, status, headers, config) {
                 //console.log(data);
                 //$scope.recommendations = data.items;
@@ -113,11 +114,11 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
                     q+= 'id:'+item.docId+'^'+item.weight + ' ';
                 }
                 //console.log("WAHT IS Q:" + q);
-                fusionHttp.getQueryPipeline(staplesSettings.fusionUrl,"staples1-simple",staplesSettings.collectionId,"select",
+                fusionHttp.getQueryPipeline(stullerSettings.fusionUrl,"products1-simple",stullerSettings.collectionId,"select",
                     {
                         q: q,
                         wt: 'json',
-                        fl: 'id,PRODUCTNAME_t,attr_IMAGE_TYPE_URL_6_,attr_FILENAME_6_,score',
+                        fl: 'id,Name_t,attr_Image_,score',
                         rows: '5'
                     }).success(function(data) {
                         $scope.recommendations2 = data.response.docs;
@@ -127,7 +128,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
 
             });
 
-        fusionHttp.getQueriesForItemRecommendations(staplesSettings.fusionUrl,staplesSettings.collectionId,$routeParams.docId,fqs)
+        fusionHttp.getQueriesForItemRecommendations(stullerSettings.fusionUrl,stullerSettings.collectionId,$routeParams.docId,fqs)
             .success(function(data, status, headers, config) {
                 //console.log(data);
                 //$scope.recommendations = data.items;

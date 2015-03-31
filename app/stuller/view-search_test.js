@@ -1,14 +1,14 @@
 'use strict';
 
-describe('fusionSeed.viewstaplesSearch module', function() {
+describe('fusionSeed.viewstullerSearch module', function() {
 
-  beforeEach(module('fusionSeed.viewstaplesSearch'));
+  beforeEach(module('fusionSeed.viewstullerSearch'));
 
   describe('view-search controller', function(){
 
     it('should ....', inject(function($controller) {
       //spec body
-      var viewSearchCtrl = $controller('ViewstaplesSearchCtrl');
+      var viewSearchCtrl = $controller('ViewstullerSearchCtrl');
       expect(viewSearchCtrl).toBeDefined();
     }));
 

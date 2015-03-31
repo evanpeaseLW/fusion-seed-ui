@@ -6,55 +6,22 @@
 	<div class="col-md-3" style="padding-left:40px;">
 
 
-        <!-- Choose Department -->
-        <staples-choose-department-facet ng-show="$routeParams.q">
-        </staples-choose-department-facet>
 
         <!-- category nav -->
-        <solr-path-hierarchy-facet-field ng-show="!$routeParams.q"
+        <solr-path-hierarchy-facet-field
                 label="Browse"
-                facet-data="facet_fields.cat_tree"
-                facet-name="cat_tree"
+                facet-data="facet_fields.attr_MarketingCategories_"
+                facet-name="attr_MarketingCategories_"
                 is-facet-filter-open="isCatFilterOpen"
                 path-separator="taxonomy_separator"
                 create-link="createCatLink">
         </solr-path-hierarchy-facet-field>
 
 
-        <!-- In_Store_Availability_en_US_s -->
-        <solr-facet-field
-                label="In Store Availability"
-                facet-data="facet_fields.In_Store_Availability_en_US_s"
-                facet-name="In_Store_Availability_en_US_s"
-                is-facet-filter-open="isFacetFilterOpen"
-                click-facet="clickFacet"
-                is-selected="isSelected"
-                show-value-filter="true"
-                short-list="true"
-                >
-        </solr-facet-field>
-
-
-        <!-- Result Type -->
         <solr-facet-field
                 label="Result Type"
-                facet-data="facet_fields.PRODUCTTYPE_NAME_s"
-                facet-name="PRODUCTTYPE_NAME_s"
-                is-facet-filter-open="isFacetFilterOpen"
-                click-facet="clickFacet"
-                is-selected="isSelected"
-                show-value-filter="true"
-                short-list="true"
-                >
-        </solr-facet-field>
-
-        <staples-search-within-results-filter ng-show="$routeParams.q"></staples-search-within-results-filter>
-
-        <!-- Brand -->
-        <solr-facet-field
-                label="Brand"
-                facet-data="facet_fields.Brand_en_US_s"
-                facet-name="Brand_en_US_s"
+                facet-data="facet_fields.attr_productType_"
+                facet-name="attr_productType_"
                 is-facet-filter-open="isFacetFilterOpen"
                 click-facet="clickFacet"
                 is-selected="isSelected"
@@ -62,6 +29,46 @@
                 short-list="false"
                 >
         </solr-facet-field>
+
+
+        <solr-facet-field
+                label="Metal Color"
+                facet-data="facet_fields.attr_MetalColor_"
+                facet-name="attr_MetalColor_"
+                is-facet-filter-open="isFacetFilterOpen"
+                click-facet="clickFacet"
+                is-selected="isSelected"
+                show-value-filter="true"
+                short-list="false"
+                >
+        </solr-facet-field>
+        <solr-facet-field
+                label="Metal Type"
+                facet-data="facet_fields.attr_MetalType_"
+                facet-name="attr_MetalType_"
+                is-facet-filter-open="isFacetFilterOpen"
+                click-facet="clickFacet"
+                is-selected="isSelected"
+                show-value-filter="true"
+                short-list="false"
+                >
+        </solr-facet-field>
+
+        <solr-facet-field
+                label="Price Range"
+                facet-data="facet_fields.PriceRange_s"
+                facet-name="PriceRange_s"
+                is-facet-filter-open="isFacetFilterOpen"
+                click-facet="clickFacet"
+                is-selected="isSelected"
+                show-value-filter="true"
+                short-list="false"
+                >
+        </solr-facet-field>
+
+
+        <stuller-search-within-results-filter ng-show="$routeParams.q"></stuller-search-within-results-filter>
+
 
 
 
@@ -88,10 +95,10 @@
 		<div class="col-md-12" align="center">
             <div class="col-md-3">
                 <fusion-run-aggr></fusion-run-aggr>
-                <staples-notification></staples-notification>
+                <stuller-notification></stuller-notification>
             </div>
             <div class="col-md-6">
-                <staples-auto-complete></staples-auto-complete>
+                <stuller-auto-complete></stuller-auto-complete>
             </div>
 		</div>
 		<div class="col-md-12" style="padding-top:20px">
@@ -118,12 +125,11 @@
 
                 <span ng-if="$routeParams.q">for "{{$routeParams.q}}"</span></h3>
 
-            <staples-spell-suggest></staples-spell-suggest>
+            <stuller-spell-suggest></stuller-spell-suggest>
 
 			<div class="col-md-12" ng-repeat="doc in docs">
                 <br />
-                <staples-product-result-item></staples-product-result-item>
-                <fusion-click-simulator></fusion-click-simulator>
+                <stuller-product-result-item></stuller-product-result-item>
 			</div>
 
 

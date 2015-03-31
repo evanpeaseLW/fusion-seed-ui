@@ -2,8 +2,8 @@
 angular.module('fusion.Directives', [])
 
     /*
-     staples DIRECTIVES
-     Directives for the staples Pilot
+     stuller DIRECTIVES
+     Directives for the stuller Pilot
      */
     .directive('fusionClickSimulator', function() {
         return {

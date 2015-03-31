@@ -9,7 +9,7 @@ var orig_q = request.getFirstParam("q");
 
 //try {
 
-var server = solrServerFactory.getSolrServer("staples1_signals_aggr");
+var server = solrServerFactory.getSolrServer("stuller1_signals_aggr");
 
 var params = new SolrQuery();
 

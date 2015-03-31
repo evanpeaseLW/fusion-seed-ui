@@ -1,0 +1,35 @@
+<div class="col-md-3" align="center">
+    <img ng-src="{{doc.attr_Image_[0].replace('$standard$','$list$')}}" /><br />
+    <small>
+        Item {{doc.attr_CATENTRY_ID_[0]}} <br/>
+        Model {{doc.attr_MFPARTNUMBER_[0]}}
+    </small>
+</div>
+
+<div class="col-md-5">
+        <!-- also pass q to product page -->
+        <a href="#/stuller/p/{{urlSafe(doc.Name_t)}}/{{doc.id}}?q={{$routeParams.q}}">
+            <span ng-bind-html="renderHtml(doc.Name_t)"></span>
+        </a>
+
+    <small>
+        <br />
+        {{doc.CategoryPaths_t}}
+        <br />
+        <span style="color:red;">${{doc.attr_Price_[0]}}</span>
+    </small>
+</div>
+
+<div class="col-md-4">
+    ID: {{doc.id}} <br />
+    Score: {{doc.score}}<br />
+    Merch. Sort Order: {{doc.merchantSortOrder_i}} <br/>
+    <a class="small" ng-click="showDoc = !showDoc" href="javascript:void(0);">View Document</a>
+    <blockquote ng-show="showDoc">
+        <pre>{{doc | json}}</pre>
+    </blockquote>
+
+
+    <fusion-click-simulator></fusion-click-simulator>
+
+</div>

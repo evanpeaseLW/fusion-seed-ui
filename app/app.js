@@ -5,9 +5,9 @@ angular.module('fusionSeed', [
   'ngRoute',
   'ui.bootstrap',
   'fusionSeed.viewSearch',
-  'fusionSeed.viewstaplesSearch',
-  'fusionSeed.viewstaplesProduct',
-  'fusionSeed.staplesSettings',
+  'fusionSeed.viewstullerSearch',
+  'fusionSeed.viewstullerProduct',
+  'fusionSeed.stullerSettings',
   'fusionSeed.http',
   'fusionSeed.version'
 ])
