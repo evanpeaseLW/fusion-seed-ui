@@ -328,7 +328,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
                 $scope.notification = true;
                 $scope.notificationMsg = msg;
             });*/
-        return fusionHttp.postSignal(staplesSettings.proxyUrl+staplesSettings.fusionUrl,collection_id,data)
+        return fusionHttp.postSignal(staplesSettings.fusionUrl,collection_id,data)
             .success(function(response) {
                 console.log(response);
                 var msg = 'Successfully indexed signals for docid: ' + docId;
@@ -357,7 +357,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
         //console.log("Posting to " + url);
 
         //return $http.post(url)
-        fusionHttp.postRunAggr(staplesSettings.proxyUrl+staplesSettings.fusionUrl,collection_id,staplesSettings.aggrJobId)
+        fusionHttp.postRunAggr(staplesSettings.fusionUrl,collection_id,staplesSettings.aggrJobId)
             .success(function(response) {
                 var msg = 'Started click aggregation job';
                 console.log(msg);
@@ -365,7 +365,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
                 $scope.notificationMsg = msg;
             });
 
-        fusionHttp.postRunAggr(staplesSettings.proxyUrl+staplesSettings.fusionUrl,collection_id,"cartAggr")
+        fusionHttp.postRunAggr(staplesSettings.fusionUrl,collection_id,"cartAggr")
             .success(function(response) {
                 var msg = 'Started addToCart aggregation job';
                 console.log(msg);
@@ -376,68 +376,6 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 
     }
 
-    //Not being used - uses an Ngram approach for suggestions.
-    $scope.typeAheadSearch3 = function(val) {
-        //var url = staples_DEFAULTS.proxy_url+'ec2-54-90-6-131.compute-1.amazonaws.com:8983/solr/staples_poc1/suggest';
-        var url =  staplesSettings.proxyUrl+staplesSettings.fusionUrl+'/api/apollo/query-pipelines/type-ahead/collections/'+collection_id+'/suggest';
-        return $http.get(url, {
-            params: {
-                q: val,
-                fq: 'store_code_s:'+$routeParams.store
-            }
-
-        }).then(function(response){
-            //console.log(response);
-            var d = response.data.response.docs;
-
-            var ta = [];
-            for (var i=0;i<d.length;i++) {
-                //console.log(d[i].description_s)
-                ta.push(d[i].description);
-            }
-            return ta;
-        })
-    };
-
-
-    //TODO: integrate http://ec2-54-90-6-131.compute-1.amazonaws.com:8983/solr/staples_poc1/suggest2?q=chi
-    //It uses the spellcheck component and performs well on the search history index.
-    $scope.typeAheadSearch2 = function(val) {
-
-        var url = staplesSettings.proxyUrl + "ec2-54-90-6-131.compute-1.amazonaws.com:8983/solr/staples_poc1/suggest2?q="+val;
-
-        return $http.get(url, {
-            params: {
-                wt: 'json'
-            }
-
-        }).then(function (response) {
-            var ta = [];
-
-            if (val.split(' ').length == 1) {
-                var d = response.data.spellcheck.suggestions[1].suggestion;
-                //console.log(d);
-                for (var i = 0; i < d.length; i++) {
-                    //console.log(d);
-                    //console.log("pushing:");
-                    //console.log(d[i].term);
-                    ta.push(d[i]);
-                }
-                return ta;
-            } else {
-                var d = response.data.spellcheck.suggestions[3].suggestion;
-                for (var i = 0; i < d.length; i++) {
-                    //console.log(d);
-                    //console.log("pushing:");
-                    //console.log(d[i].term);
-                    ta.push(d[i]);
-                }
-            }
-        })
-
-    };
-
-
 
     //an alternate type ahead using the search history collection and the suggester component
     $scope.typeAheadSearch = function(val) {
@@ -447,11 +385,10 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
         return fusionHttp.getQueryPipeline(staplesSettings.fusionUrl,staplesSettings.simplePipelineId,staplesSettings.typeAheadCollectionId,"suggest",
             {
                 wt: 'json',
-                "suggest.dictionary": "mySuggester",
                 q: val
 
         }).then(function (response) {
-            var d = response.data.suggest.mySuggester[val].suggestions
+            var d = response.data.suggest.suggester1[val].suggestions
             //console.log(d);
             var ta = [];
             for (var i = 0; i < d.length; i++) {

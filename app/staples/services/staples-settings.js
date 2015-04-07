@@ -7,11 +7,11 @@ myModule.factory('staplesSettings', ['$http', function($http) {
     var staplesSettings = {
         //"proxyUrl": "http://localhost:9292/",
         //"fusionUrl": "162.242.133.12:8764",
-        "fusionUrl": "http://162.242.133.12:9292",
+        "fusionUrl": "http://search-solr_ned.staples.com",
         "pipelineId": "staples1-default",
         "simplePipelineId": "staples1-simple",
         "collectionId": "staples1",
-        "typeAheadCollectionId": "staples1_suggest",
+        "typeAheadCollectionId": "staples1_autocomplete",
         "requestHandler": "select",
         "taxonomyField": "cat_tree",
         "taxonomySeparator": "/",
