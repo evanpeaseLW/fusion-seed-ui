@@ -353,7 +353,6 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
     $scope.runAggregations = function() {
 
         //var url = staples_DEFAULTS.proxy_url+'ec2-54-90-6-131.compute-1.amazonaws.com:8764/api/apollo/aggregator/jobs/'+collection_id+'_signals/'+staples_DEFAULTS.aggr_job_id;
-			//test
         //console.log("Posting to " + url);
 
         //return $http.post(url)
