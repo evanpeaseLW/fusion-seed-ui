@@ -131,7 +131,7 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
             .success(function(data, status, headers, config) {
                 //console.log(data);
                 //$scope.recommendations = data.items;
-                var qs = []
+                var qs = [];
                 for (var i=0;i<data.items.length;i++) {
                     var item = data.items[i];
                     if (item.query != '*:*')
@@ -141,9 +141,4 @@ angular.module('fusionSeed.viewstaplesProduct', ['ngRoute','solr.Directives', 's
                 //console.log(q);
 
             });
-
-
-
-
-
     });

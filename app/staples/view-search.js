@@ -81,7 +81,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 	//parse filter queries into an array so they can be passed.
 	var fqs = [];
 	//if (filter) fqs = filter.split(filter_separator);
-    if (filter) fqs = filter //$routeParams.f;
+    if (filter) fqs = filter; //$routeParams.f;
 	//if we're using multi_select_facets, change the syntax of the fqs
 	if (multi_select_facets) {
 		var new_fqs = [];
@@ -96,7 +96,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 		fqs = new_fqs;
 	}
 	//convert all fqs to {!term} qparser syntax
-	var new_fqs = []
+	var new_fqs = [];
     //add category as a filter
     new_fqs.push(cpath_fq);
     if (Array.isArray(fqs)) {
@@ -142,7 +142,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 
 
     //get recommendations bq
-    var bq = ''
+    var bq = '';
     var recFilters = [];
     if ($routeParams.store) recFilters.push('filters_orig_ss:store/'+$routeParams.store.toLowerCase());
     if ($routeParams.category && $routeParams.category != '*')
@@ -239,9 +239,9 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
                             console.log(data2);
                             if (data2.spellcheck.suggestions.collation) {
                                 console.log("YES");
-                                $scope.spellsuggest = data2.spellcheck.suggestions.collation
+                                $scope.spellsuggest = data2.spellcheck.suggestions.collation;
                             } else {
-                                $scope.spellsuggest = data2.spellcheck.suggestions
+                                $scope.spellsuggest = data2.spellcheck.suggestions;
                             }
                             //console.log($scope.spellsuggest);
                         });
@@ -277,7 +277,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
     }
 
 
-	$scope.encodePath =  function(path) { return encodePath(path) };
+	$scope.encodePath =  function(path) { return encodePath(path); };
 	$scope.parseFacetLabel = function(field) {
         //console.log("in parse facet label");
         field = field.replace('_ss', '');
@@ -288,11 +288,11 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 
     $scope.doSearchWithin = function(text) {
         $location.search('searchWithin', text);
-    }
+    };
 
 	$scope.clickSearch = function(query) {
 		$location.search('q', query);
-	}
+	};
 
 
 
@@ -312,7 +312,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
         var ts = d.toISOString();
 
 
-        var data = []
+        var data = [];
         for (var i= 0;i<count;i++) {
             var signal = {"params": {"query": $routeParams.q, filterQueries: filters, "docId": docId}, "type":signalType, "timestamp": ts};
             //console.log(solrParams.q);
@@ -332,11 +332,11 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             .success(function(response) {
                 console.log(response);
                 var msg = 'Successfully indexed signals for docid: ' + docId;
-                console.log(msg)
+                console.log(msg);
                 $scope.notification = true;
                 $scope.notificationMsg = msg;
             });
-    }
+    };
 
 
     $scope.urlSafe = function(text) {
@@ -347,7 +347,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
         text = text.replace(/\./g,'-');
 
         return text;
-    }
+    };
 
     //http://ec2-54-90-6-131.compute-1.amazonaws.com:8764/api/apollo/aggregator/jobs/staples_poc1_signals/staplesClickAggr
     $scope.runAggregations = function() {
@@ -373,21 +373,19 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             });
         return;
 
-    }
+    };
 
 
     //an alternate type ahead using the search history collection and the suggester component
     $scope.typeAheadSearch = function(val) {
 
-        //var url = staplesSettings.proxyUrl + "ec2-54-90-6-131.compute-1.amazonaws.com:8983/solr/staples_search_history/suggest?suggest=true&suggest.build=true&suggest.dictionary=staplesSuggester&suggest.q="+val;
-        //return $http.get(url, {
         return fusionHttp.getQueryPipeline(staplesSettings.fusionUrl,staplesSettings.simplePipelineId,staplesSettings.typeAheadCollectionId,"suggest",
             {
                 wt: 'json',
                 q: val
 
         }).then(function (response) {
-            var d = response.data.suggest.suggester1[val].suggestions
+            var d = response.data.suggest.suggester1[val].suggestions;
             //console.log(d);
             var ta = [];
             for (var i = 0; i < d.length; i++) {
@@ -396,7 +394,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
                 ta.push(d[i].term);
             }
             return ta;
-        })
+        });
 
     };
 
@@ -413,7 +411,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             $location.search('sale', 'true');
         }
 
-    }
+    };
 
     $scope.isSalesFilterChecked = function () {
 
@@ -421,7 +419,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             return true;
         }
 
-    }
+    };
 
 
 
@@ -433,7 +431,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
         if ($routeParams.q) q = $routeParams.q;
 
         return "#/"+staplesSettings.controllerPath+"/"+encodePath(cat)+"?q="+q;
-    }
+    };
 
 
     $scope.renderSearchResultsBullets = function(data) {
@@ -446,7 +444,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             }
             html += '</ul>';
             return $sce.trustAsHtml(html);
-        }
+       };
 
 	$scope.clickFacet = function(fname, fvalue) {
 
@@ -480,7 +478,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
             var f = []; //array of filters
             if (search['f']) {
                 //if there is already multiple "f"s then it is already array
-                if (Array.isArray(search['f'])) f = search['f']
+                if (Array.isArray(search['f'])) f = search['f'];
                 //if there is a single value (not an array), add it to our array
                 else f.push(search['f']);
             }
@@ -520,7 +518,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 		if (routeParams.q) new_url+= '?q='+routeParams.q;
 		$location.url(new_url).search(search);*/
 
-	}
+	};
 
 	function splitFilter(filter, filter_separator) {
 		return filter.split(filter_separator);
@@ -545,7 +543,7 @@ angular.module('fusionSeed.viewstaplesSearch', ['ngRoute','solr.Directives', 'st
 			else return false;
 		}
 		return false;
-	}
+	};
 
 	$scope.renderHtml = function(html_code)
 	{
